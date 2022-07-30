@@ -9,6 +9,7 @@ echo 'set -g default-terminal "screen-256color"' >> /.tmux.conf
 . /opt/ros/noetic/setup.bash
 . /workspace/carto_ws/install_isolated/setup.bash
 . /workspace/pupper_ws/devel/setup.bash
+export ROS_PACKAGE_PATH=/workspace/carto_ws/install_isolated/share:$ROS_PACKAGE_PATH
 
 # Add your own commands here:
 #
