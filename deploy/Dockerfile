@@ -1,5 +1,8 @@
 FROM ros:noetic-ros-base-focal
 
+ENV ROS_MASTER_URI http://127.0.0.1:11311
+ENV ROS_IP 127.0.0.1
+
 RUN apt-get update \
     && apt-get install --no-install-recommends -y \
         curl \
@@ -79,19 +82,6 @@ RUN cd carto_ws \
     && . /opt/ros/noetic/setup.sh \
     && catkin_make_isolated --install --use-ninja \
     && . install_isolated/setup.sh
-
-# RUN mkdir carto_ws \
-#     && cd carto_ws \
-#     && wstool init src \
-#     && wstool merge -t src https://raw.githubusercontent.com/cartographer-project/cartographer_ros/master/cartographer_ros.rosinstall \
-#     && wstool update -t src \
-#     && rosdep init \
-#     && rosdep update \
-#     && rosdep install --from-paths src --ignore-src --rosdistro=${ROS_DISTRO} -y \
-#     && src/cartographer/scripts/install_abseil.sh \
-#     && . apt-get remove ros-${ROS_DISTRO}-abseil-cpp \
-#     && catkin_make_isolated --install --use-ninja \
-#     && . install_isolated/setup.bash
 
 # Download and install mini-pupper ros
 RUN mkdir -p pupper_ws/src \
