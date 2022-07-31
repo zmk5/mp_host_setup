@@ -1,5 +1,6 @@
 # mp_host_setup
-Host computer setup for interfacing with a Mini Pupper over a network
+
+Host computer Docker setup for interfacing with a Mini Pupper over a network or just running simulations locally.
 
 We provide two versions of the Docker container:
 
@@ -97,3 +98,27 @@ If you are running an Intel integrated graphics, link the device `/dev/dri/card0
 ```bash
 ~$ rocker --user --x11 --devices /dev/dri/card0 -- mp:develop
 ```
+
+However, you will need to link device `/dev/dri/renderD128` if you are using an *Intel Chipset with Xe graphics*.
+
+```bash
+~$ rocker --user --x11 --devices /dev/dri/renderD128 -- mp:develop
+```
+
+## Run Mini Pupper Simulation within the Container
+
+With either the `develop` or `deploy` container, you will be able to run a Gazebo simulation of the Mini Pupper with the following command:
+
+```bash
+~$ roslaunch mini_pupper gazebo.launch rviz:=true
+```
+
+It should look something like this:
+
+![Gazebo Simulation of Mini Pupper](docs/gazebo.png)
+
+Make sure to go to the [`minipupper_ros` project](https://github.com/mangdangroboticsclub/minipupper_ros) for more information on how to run the Mini Pupper with ROS!
+
+## Command a Physical Mini Pupper from the Docker Container
+
+**Coming Soon!**
