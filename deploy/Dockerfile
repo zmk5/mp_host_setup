@@ -92,9 +92,6 @@ RUN mkdir -p pupper_ws/src \
     && . /opt/ros/noetic/setup.sh \
     && catkin_make
 
-ENV ROS_MASTER_URI http://127.0.0.1:11311
-ENV ROS_IP 127.0.0.1
-
 COPY ["pupper_entrypoint.sh", "/pupper_entrypoint.sh"]
 ENTRYPOINT ["/pupper_entrypoint.sh"]
 CMD ["/bin/bash"]
