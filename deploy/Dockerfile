@@ -1,7 +1,10 @@
 FROM ros:noetic-ros-base-focal
 
-ENV ROS_MASTER_URI http://127.0.0.1:11311
-ENV ROS_IP 127.0.0.1
+ARG IP_MASTER=localhost
+ARG IP_LOCAL=127.0.0.1
+
+ENV ROS_MASTER_URI http://${IP_MASTER}:11311
+ENV ROS_IP ${IP_LOCAL}
 
 RUN apt-get update \
     && apt-get install --no-install-recommends -y \
