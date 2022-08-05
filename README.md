@@ -93,16 +93,10 @@ If you used the `--user` flag, a user with your username and home directory will
 
 ### Users with Intel Integrated Graphics
 
-If you are running an Intel integrated graphics, link the device `/dev/dri/card0` preceeding the `--device` flag followed by `--`.
+If you are running [Intel integrated graphics](https://www.intel.com/content/www/us/en/develop/documentation/get-started-with-ai-linux/top/using-containers/using-containers-with-the-command-line.html), link the directory `/dev/dri` preceeding the `--device` flag followed by `--` for hardware acceleration support. This is necessary for running RViz or other visualization and simulation tools.
 
 ```bash
-~$ rocker --user --x11 --devices /dev/dri/card0 -- mp:develop
-```
-
-However, you will need to link device `/dev/dri/renderD128` if you are using an *Intel Chipset with Xe graphics*.
-
-```bash
-~$ rocker --user --x11 --devices /dev/dri/renderD128 -- mp:develop
+~$ rocker --user --x11 --devices /dev/dri -- mp:develop
 ```
 
 ## Run Mini Pupper Simulation within the Container
