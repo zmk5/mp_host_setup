@@ -53,10 +53,10 @@ Once `rocker` is installed, you may `cd` into either the `develop` or `deploy` d
 ~$ docker build -t mp:deploy .
 ```
 
-If you know the `ROS_MASTER_URI` and `ROS_IP` for the host computer, you can add them as parameters to the build as the values `IP_MASTER` and `IP_LOCAL`.
+If you know the `ROS_MASTER_URI` and `ROS_IP` for the host computer, you can add them as parameters to the build as the values `IP_MASTER` and `IP_LOCAL`. The following sets both values to `localhost`. For connecting to a Mini Pupper, you will need to set these to actual IP address of the host system.
 
 ```bash
-~$ docker build -t mp:deploy --build-arg IP_MASTER=localhost --build-arg IP_LOCAL=localhost .
+~$ docker build -t mp:deploy --build-arg IP_MASTER=localhost --build-arg IP_LOCAL=127.0.0.1 .
 ```
 
 ## Running the Docker Images
