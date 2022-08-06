@@ -67,6 +67,7 @@ If you know the `ROS_MASTER_URI` and `ROS_IP` for the host computer, you can add
 - `--nvidia`: Enable Nvidia drivers for better graphical support with visualization and simulation applications.
 - `--user`: Create a non-root `sudo` user linked to current user of the host computer.
 - `--volume`: Mount a directory located on the host computer for use in the container.
+- `--net`: Connect your container to certain networks.
 
 **NOTE**: Using these extensions builds a new Docker image specific to the extensions used. If you later try to use `rocker` with a different set of extensions, you will get a new Docker image.
 
@@ -115,4 +116,11 @@ Make sure to go to the [`minipupper_ros` project](https://github.com/mangdangrob
 
 ## Command a Physical Mini Pupper from the Docker Container
 
-**Coming Soon!**
+We can command a physical Mini Pupper using a teleop operation (or any other `roslaunch` command) instead of going into a `bash` session by running the following:
+
+```bash
+~$ rocker --user --x11 --net=host mp:develop roslaunch champ_teleop teleop.launch
+~$ rocker --x11 --net=host mp:deploy roslaunch champ_teleop teleop.launch
+```
+
+Notice that we use the `--net` flag followed by `host`. This connects our container to the host machines network enabling us to communicate with the Mini Pupper using a WiFi connection.
