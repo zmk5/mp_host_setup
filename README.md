@@ -54,3 +54,13 @@ Once the images are built, we can run a simulation with RViz using the following
 ```
 
 This will bring up a Gazebo simulation along with RViz.
+
+### Controlling a Mini Pupper with Teleop Node
+
+With the simulation up, we can control the pupper using the teleop node. Instead of using `docker compose up` we will run `docker compose run` instead. 
+
+**NOTE**: The `up` command simply creates and starts the container service in a non-interactive mode. This isn't a big deal for GUI services since you can interact with the GUI that pops up and it will work. However, this is an issue when trying to run a ROS node that takes in user input from a keyboard in the CLI. The `run` command runs a one-off command of our teleop service that we can interact with and move the pupper.
+
+```bash
+~$ docker compose up keyboard
+```
