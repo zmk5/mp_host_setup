@@ -1,0 +1,72 @@
+version: "3.9"
+services:
+  # Base image containing dependencies.
+  base:
+    image: pupper:base
+    build:
+      context: .
+      dockerfile: docker/humble.Dockerfile
+      args:
+        DOMAIN_ID: 42
+      target: base
+    # Interactive shell
+    stdin_open: true
+    tty: true
+    # Networking and IPC for ROS 2
+    network_mode: host
+    ipc: host
+    # Needed to display graphical applications
+    privileged: True
+    environment:
+      # Allows graphical programs in the container.
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+      - NVIDIA_DRIVER_CAPABILITIES=all
+    volumes:
+      # Allows graphical programs in the container.
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - ${XAUTHORITY:-$HOME/.Xauthority}:/root/.Xauthority
+
+  # Simulation container
+  simulation:
+    extends: base
+    image: pupper:simulation
+    build:
+      context: .
+      dockerfile: docker/humble.Dockerfile
+      target: simulation
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+          # devices:
+          #   - "/dev/dri:/dev/dri"
+    command: ros2 launch mini_pupper_gazebo gazebo.launch.py rviz:=true
+
+  # Developer container
+  dev:
+    extends: base
+    image: pupper:devel
+    build:
+      context: .
+      dockerfile: docker/humble.Dockerfile
+      target: devel
+      args:
+        - UID=${UID:-1000}
+        - GID=${UID:-1000}
+        - USERNAME=${USERNAME:-pupper}
+    user: ${USERNAME:-pupper}
+    command: sleep infinity
+
+  # keyboard container
+  keyboard:
+    extends: base
+    command: ros2 run teleop_twist_keyboard teleop_twist_keyboard
+
+  # mapping container
+  mapping:
+    extends: base
+    command: ros2 launch mini_pupper_navigation slam.launch.py
